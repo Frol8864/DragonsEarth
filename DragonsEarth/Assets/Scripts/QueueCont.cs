@@ -24,7 +24,11 @@ public class QueueCont : MonoBehaviour
     public void ClickEndTurn() {
         //todo
         switch(gameCont.statusGame){
-            case StatusGame.test: idPlayerTurn = (idPlayerTurn + 1) % 2; break;
+            case 
+                StatusGame.test: idPlayerTurn = (idPlayerTurn + 1) % 2; 
+                Debug.Log(gameCont.players[idPlayerTurn].units[0].nameUnit);
+                gameCont.gameObj.GetComponent<Image>().sprite = gameCont.players[idPlayerTurn].units[0].sprite;
+            break;
             default: break;
         }
         UpdateShow();

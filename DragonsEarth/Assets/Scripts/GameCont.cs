@@ -9,12 +9,16 @@ using UnityEngine.Events;
 public class GameCont : MonoBehaviour
 {
     [SerializeField] QueueCont queueCont;
+    [SerializeField] LibaryUnit libaryUnit;
+    public GameObject gameObj;
     public List<Player> players;
     public StatusGame statusGame;
     void Start() {
         StartPlayers();
         //todo
         statusGame = StatusGame.test;
+        libaryUnit.AddUnit(0,CodeUnit.angel);
+        libaryUnit.AddUnit(1,CodeUnit.devil);
         queueCont.StartTest();
     }
 

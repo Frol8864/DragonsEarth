@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Stat : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int valueStrong;
+    public int valueAttack;
+    public int valueArmor;
+    public int valueWizard;
+    public int valueSpeed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Stat(int valueStrongN, int valueAttackN, int valueArmorN, int valueWizardN, int valueSpeedN){
+        valueStrong = valueStrongN;
+        valueAttack = valueAttackN;
+        valueArmor = valueArmorN;
+        valueWizard = valueWizardN;
+        valueSpeed = valueSpeedN;
     }
 }

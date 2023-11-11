@@ -12,9 +12,11 @@ public class Player : MonoBehaviour
     public Color color;
     public Stat stat;
     public Skill skill;
+    public List<Unit> units;
     public void StartPlayer(int idN, Color colorN) {
         id = idN;
         color = colorN;
+        units = new List<Unit>();
         //todo
     }
 }
