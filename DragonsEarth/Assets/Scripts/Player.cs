@@ -19,4 +19,9 @@ public class Player : MonoBehaviour
         units = new List<Unit>();
         //todo
     }
+
+    public List<Unit> GetUnitForStartRound(){
+        //todo
+        return units;
+    }
 }

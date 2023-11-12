@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class Stat : MonoBehaviour
 {
-    public int valueStrong;
-    public int valueAttack;
-    public int valueArmor;
-    public int valueWizard;
-    public int valueSpeed;
+    public List<int> stats = new List<int>(){0,0,0,0,0};
 
     public Stat(int valueStrongN, int valueAttackN, int valueArmorN, int valueWizardN, int valueSpeedN){
-        valueStrong = valueStrongN;
-        valueAttack = valueAttackN;
-        valueArmor = valueArmorN;
-        valueWizard = valueWizardN;
-        valueSpeed = valueSpeedN;
+        stats[0] = valueStrongN;
+        stats[1] = valueAttackN;
+        stats[2] = valueArmorN;
+        stats[3] = valueWizardN;
+        stats[4] = valueSpeedN;
     }
 }
