@@ -11,6 +11,7 @@ public class QueueCont : MonoBehaviour
     [SerializeField] GameCont gameCont;
     [SerializeField] GameObject fon;
     [SerializeField] List<UnitBlock> unitBlocks;
+    [SerializeField] Message message;
     
     public int idPlayerTurn;
     public int idRound;
@@ -28,6 +29,7 @@ public class QueueCont : MonoBehaviour
     }
 
     public void EndTurn() {
+        message.EndTurn(unitQueues[0].unit);
         //todo
         switch(gameCont.statusGame){
             case StatusGame.battle: 
@@ -85,6 +87,7 @@ public class QueueCont : MonoBehaviour
 
     private void UpdateUnitForStartRound() {
         idRound++;
+        message.EndRound(idRound);
         unitQueues = new List<UnitQueue>();
         for(int i = 0; i < 2; i++) {
             List<Unit> _units = gameCont.players[i].GetUnitForStartRound();
