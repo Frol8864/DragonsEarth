@@ -39,6 +39,11 @@ public class Message : MonoBehaviour
         isUnitAction = false;
     }
 
+    public void StartTurn(Unit _unit) {
+        strMessage = _unit.nameUnit + " обдумывает свой ход";
+        message.GetComponent<Text>().text = strMessage;
+    }
+
     private void OnMouseDown() {
         OpenHistory();
     }

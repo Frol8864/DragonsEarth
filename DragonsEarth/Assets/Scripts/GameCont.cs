@@ -16,14 +16,11 @@ public class GameCont : MonoBehaviour
         StartPlayers();
         //todo
         statusGame = StatusGame.battle;
-        libaryUnit.AddUnit(0,CodeUnit.hellhound);
-        libaryUnit.AddUnit(1,CodeUnit.demon);
-        libaryUnit.AddUnit(0,CodeUnit.heretic);
-        libaryUnit.AddUnit(1,CodeUnit.imp);
-        libaryUnit.AddUnit(0,CodeUnit.devil);
-        libaryUnit.AddUnit(1,CodeUnit.magog);
-        libaryUnit.AddUnit(0,CodeUnit.succubus);
-        libaryUnit.AddUnit(1,CodeUnit.ifrit);
+        libaryUnit.AddUnit(0,CodeUnit.bonedragon);
+        libaryUnit.AddUnit(1,CodeUnit.poisonousdragon);
+        libaryUnit.AddUnit(0,CodeUnit.firedragon);
+        libaryUnit.AddUnit(1,CodeUnit.horneddragon);
+        libaryUnit.AddUnit(0,CodeUnit.stonedragon);
         queueCont.StartQueueCont();
     }
 

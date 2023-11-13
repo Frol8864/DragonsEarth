@@ -37,6 +37,7 @@ public class QueueCont : MonoBehaviour
             break;
             default: break;
         }
+        message.StartTurn(unitQueues[0].unit);
         UpdateShow();
     }
 
@@ -101,6 +102,7 @@ public class QueueCont : MonoBehaviour
             }
         }
         SortUnit();
+        message.StartTurn(unitQueues[0].unit);
     }
 
     private void SortUnit() {
@@ -116,13 +118,16 @@ public class QueueCont : MonoBehaviour
         for(int i = 0; i < _count; i++) {
             maxs[0]=GetMaxInitiative(0,_unitQueues,true);
             maxs[1]=GetMaxInitiative(1,_unitQueues,true);
-            if(maxs[(_idPlayerTurn+1)%2] > maxs[_idPlayerTurn]) _idPlayerTurn = (_idPlayerTurn+1)%2;
+            if(maxs[(_idPlayerTurn+1)%2] > maxs[_idPlayerTurn]) 
+                _idPlayerTurn = (_idPlayerTurn+1)%2;
 
             bool isAdd = false;
             for(int j = 0; j < _unitQueues.Count; j++) {
-                    if(!isAdd && _unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
+                if(!isAdd && _unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
                     unitQueues.Add(_unitQueues[j]);
                     _unitQueues.RemoveAt(j);
+                    _idPlayerTurn = (_idPlayerTurn+1)%2;
+                    break;
                 }
             }
         }
@@ -134,9 +139,11 @@ public class QueueCont : MonoBehaviour
 
             bool isAdd = false;
             for(int j = 0; j < _unitQueues.Count; j++) {
-                    if(!isAdd && !_unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
+                if(!isAdd && !_unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
                     unitQueues.Add(_unitQueues[j]);
                     _unitQueues.RemoveAt(j);
+                    _idPlayerTurn = (_idPlayerTurn+1)%2;
+                    break;
                 }
             }
         }
