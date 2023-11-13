@@ -12,12 +12,17 @@ public class UnitBlock : MonoBehaviour
     [SerializeField] GameObject fon;
     [SerializeField] GameObject color;
     [SerializeField] GameObject damage;
+    [SerializeField] GameObject typeAtack;
     [SerializeField] GameObject initiative;
     [SerializeField] GameObject strength;
+    [SerializeField] GameObject wizard;
     [SerializeField] Text textDamage;
     [SerializeField] Text textInitiative;
     [SerializeField] Text textStrength;
+    [SerializeField] Text textwizard;
     [SerializeField] Text textRound;
+    [SerializeField] Sprite meleeAtack;
+    [SerializeField] Sprite notMeleeAtack;
     [SerializeField] Sprite empty;
     private Unit unit;
 
@@ -39,6 +44,11 @@ public class UnitBlock : MonoBehaviour
         damage.SetActive(true);
         initiative.SetActive(true);
         strength.SetActive(true);
+        if(unit.isWizard){
+            wizard.SetActive(true);
+            textwizard.GetComponent<Text>().text = _unitData.wizard.ToString();
+        }
+        typeAtack.GetComponent<Image>().sprite = unit.isMelee ? meleeAtack : notMeleeAtack;
         textRound.GetComponent<Text>().text = "";
         textDamage.GetComponent<Text>().text = _unitData.damage.ToString();
         textInitiative.GetComponent<Text>().text = _unitData.initiative.ToString();
@@ -52,6 +62,7 @@ public class UnitBlock : MonoBehaviour
         damage.SetActive(false);
         initiative.SetActive(false);
         strength.SetActive(false);
+        wizard.SetActive(false);
         textRound.GetComponent<Text>().text = _round.ToString() + '\n' + "Раунд";
     }
 }

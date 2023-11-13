@@ -44,6 +44,15 @@ public class Message : MonoBehaviour
         message.GetComponent<Text>().text = strMessage;
     }
 
+    public void LookCageBlock(CageBlockData _cageBlockData) {
+        strLook = _cageBlockData.unit.nameUnit + " охраняет " + _cageBlockData.Object.nameObject;
+        message.GetComponent<Text>().text = strLook;
+    }
+
+    public void NotLookCageBlock() {
+        message.GetComponent<Text>().text = strMessage;
+    }
+
     private void OnMouseDown() {
         OpenHistory();
     }

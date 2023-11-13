@@ -27,7 +27,8 @@ public class Unit : MonoBehaviour
             strongNowAll = strongNow,
             strength = strongNow + stat.stats[2],
             initiative = strongNow + stat.stats[4],
-            damage = stat.stats[1] + strongNow
+            damage = stat.stats[1] + strongNow,
+            wizard = strongNow + stat.stats[3]
         };
     }
 
@@ -42,4 +43,5 @@ public class UnitData{
     public int strength;
     public int initiative;
     public int damage;
+    public int wizard;
 }

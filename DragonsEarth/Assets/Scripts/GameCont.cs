@@ -10,18 +10,22 @@ public class GameCont : MonoBehaviour
 {
     [SerializeField] QueueCont queueCont;
     [SerializeField] LibaryUnit libaryUnit;
+    [SerializeField] Map map;
     public List<Player> players;
     public StatusGame statusGame;
     void Start() {
         StartPlayers();
         //todo
         statusGame = StatusGame.battle;
-        libaryUnit.AddUnit(0,CodeUnit.bonedragon);
-        libaryUnit.AddUnit(1,CodeUnit.poisonousdragon);
-        libaryUnit.AddUnit(0,CodeUnit.firedragon);
-        libaryUnit.AddUnit(1,CodeUnit.horneddragon);
-        libaryUnit.AddUnit(0,CodeUnit.stonedragon);
+        libaryUnit.AddUnit(0,CodeUnit.hobbit);
+        libaryUnit.AddUnit(1,CodeUnit.fairy);
+        libaryUnit.AddUnit(0,CodeUnit.sabermaster);
+        libaryUnit.AddUnit(1,CodeUnit.archer);
+        libaryUnit.AddUnit(0,CodeUnit.druid);
+        libaryUnit.AddUnit(1,CodeUnit.unicorn);
+        libaryUnit.AddUnit(0,CodeUnit.ent);
         queueCont.StartQueueCont();
+        map.StartMap();
     }
 
     private void StartPlayers(){

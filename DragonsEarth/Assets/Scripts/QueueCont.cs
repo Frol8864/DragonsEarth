@@ -54,7 +54,10 @@ public class QueueCont : MonoBehaviour
     }
 
     public void ChangeIdFirstUnitBlock (int x) {
-
+        if( (idFirstUnitBlock+x >=0 ) && (idFirstUnitBlock+x <= unitQueues.Count - unitBlocks.Count + 1)) {
+            idFirstUnitBlock += x;
+            UpdateShow();
+        }
     }
 
     private void UpdateShow() {

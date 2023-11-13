@@ -27,6 +27,7 @@ public class LibaryUnit : MonoBehaviour
         unit.id = -1;
         unit.idPlayer = -1;
         unit.sprite = spritesUnit.GetSprite(codeUnit.ToString());
+        unit.codeUnit = codeUnit;
         switch(codeUnit) {
             case CodeUnit.farmer: 
                 unit.nameUnit = "Крестьянин";
