@@ -11,6 +11,9 @@ public class GenerationMap : MonoBehaviour
 {
     [SerializeField] LibaryUnit libaryUnit;
     [SerializeField] LibaryObject libaryObject;
+    [SerializeField] LibraryArtifact libraryArtifact;
+    private int maxStatGuardUnit = 4;
+    private int deltaValueGuard = 7;
     private List<CodeUnit> codeUnits = new List<CodeUnit>() {
         CodeUnit.angel,
         CodeUnit.devil,
@@ -95,11 +98,73 @@ public class GenerationMap : MonoBehaviour
         CodeObject.temple,
         CodeObject.arsenal,
     };
+    
+    private List<UnitGuard> unitGuards = new List<UnitGuard>();
     public CageBlockData GetCageBlockData(){
         //todo
+        Object _Object = libaryObject.GetObject(codeObjects[Random.Range(0, codeObjects.Count)]);
+        _Object.goldGift = Random.Range(_Object.goldRange[0], _Object.goldRange[1]);
+        _Object.statGift = new Stat(Random.Range(_Object.statRange[0], _Object.statRange[1]),
+                                    Random.Range(_Object.statRange[2], _Object.statRange[3]),
+                                    Random.Range(_Object.statRange[4], _Object.statRange[5]),
+                                    Random.Range(_Object.statRange[6], _Object.statRange[7]),
+                                    Random.Range(_Object.statRange[8], _Object.statRange[9]));
+        _Object.CalculateValueObject();
+        _Object.nameObject += " " + _Object.value;
+        List<UnitGuard> _unitGuards = GetUnitGuards(_Object.value);
+        UnitGuard _unitGuard = _unitGuards[Random.Range(0, _unitGuards.Count)];
+        Unit _unit = libaryUnit.GetUnit(_unitGuard.codeUnit);
+        _unit.AddArtifact(_unitGuard.artifactGuard);
+
+
         return new CageBlockData(){
-            unit = libaryUnit.GetUnit(codeUnits[Random.Range(0, codeUnits.Count)]),
-            Object = libaryObject.GetObject(codeObjects[Random.Range(0, codeObjects.Count)])
+            unit = _unit,
+            Object = _Object
         };
+    }
+
+    private List<UnitGuard> GetUnitGuards(int valueObject){
+        List<UnitGuard> _unitGuards = new List<UnitGuard>();
+        foreach(UnitGuard _unitGuard in unitGuards) {
+            if(valueObject - deltaValueGuard <= _unitGuard.value && _unitGuard.value <= valueObject + deltaValueGuard){
+                _unitGuards.Add(_unitGuard);
+            }
+        }
+        return _unitGuards;
+    }
+
+    public void GenerationUnitGuards(){
+        for(int iU = 0; iU < codeUnits.Count; iU++) {
+            for(int iS = 0; iS < 1; iS++) {
+                for(int iAt = 0; iAt < maxStatGuardUnit; iAt++) {
+                    for(int iAr = 0; iAr < maxStatGuardUnit; iAr++) {
+                        for(int iW = 0; iW < 1; iW++) {
+                            UnitGuard _unitGuard = new UnitGuard(){
+                                codeUnit = codeUnits[iU],
+                                artifactGuard = libraryArtifact.GetArtifactGuard(iS,iAt,iAr,iW,0),
+                                libaryUnit = libaryUnit
+                            };
+                            _unitGuard.CalculateValueGuard();
+                            unitGuards.Add(_unitGuard);
+                        }   
+                    }
+                }
+            }
+        }
+    }
+}
+
+public class UnitGuard{
+    public int value;
+    public CodeUnit codeUnit;
+    public Artifact artifactGuard;
+    public LibaryUnit libaryUnit;
+
+    public void CalculateValueGuard(){
+        Unit _unit = libaryUnit.GetUnit(codeUnit);
+        _unit.AddArtifact(artifactGuard);
+        UnitData _unitData = _unit.GetUnitData();
+        //todo
+        value = _unitData.strength  * (_unit.isMelee ? _unitData.damage : _unitData.damage / 2 * 3);
     }
 }

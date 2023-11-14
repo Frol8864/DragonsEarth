@@ -13,6 +13,8 @@ public class Map : MonoBehaviour
     private int xMax = 5;
 
     public void StartMap(){
+        generationMap.GenerationUnitGuards();
+        
         for(int i = 0; i < cageBlocks.Count; i++) {
             cageBlocks[i].StartCageBlock(i%xMax,i/xMax);
         }

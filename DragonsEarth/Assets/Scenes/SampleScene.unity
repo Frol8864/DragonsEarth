@@ -11917,6 +11917,7 @@ GameObject:
   - component: {fileID: 1707358706}
   - component: {fileID: 1707358707}
   - component: {fileID: 1707358708}
+  - component: {fileID: 1707358709}
   m_Layer: 5
   m_Name: Scripts
   m_TagString: Untagged
@@ -12098,6 +12099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   libaryUnit: {fileID: 1707358705}
   libaryObject: {fileID: 1707358708}
+  libraryArtifact: {fileID: 1707358709}
 --- !u!114 &1707358708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12111,7 +12113,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameCont: {fileID: 1707358704}
+  libaryUnit: {fileID: 1707358705}
   spritesObject: {fileID: 4343727234628468602, guid: dc64b2b8dda05564ba53b6f15e53e74d, type: 2}
+--- !u!114 &1707358709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707358702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8234a70d49b36149a18c2e87206438b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1722174108
 PrefabInstance:
   m_ObjectHideFlags: 0
