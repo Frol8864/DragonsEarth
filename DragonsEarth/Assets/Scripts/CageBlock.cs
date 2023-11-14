@@ -26,46 +26,84 @@ public class CageBlock : MonoBehaviour
     [SerializeField] Sprite notMeleeAtack;
     [SerializeField] Message message;
 
-    private Unit unit;
+    public Unit unit;
+    public bool isUnit;
     private Object Object;
-    private bool isActive;
     private bool isGuard;
+    private StatusActive statusActive;
+    private bool isActive;
+    private int id;
+    public Map map;
 
-    public int x;
-    public int y;
-
-    public void AddObject(CageBlockData _cageBlockData) {
+    public void AddObject(CageBlockData _cageBlockData, Map _map, int _id) {
+        map = _map;
+        id = _id;
         isGuard = true;
+        isUnit = true;
+        isActive = false;
+        statusActive = StatusActive.none;
+        dead.SetActive(false);
+        textAtack.GetComponent<Text>().text = "";
         unit = _cageBlockData.unit;
         Object = _cageBlockData.Object;
         UnitData _unitData = unit.GetUnitData();
         turnColor.GetComponent<Image>().color = new Color(0,0,0,0);
-        playerColor.SetActive(false);
         //fon.GetComponent<Image>().sprite = unit.sprite;
-        spriteObject.GetComponent<Image>().sprite = Object.sprite;
-        spriteUnit.GetComponent<Image>().sprite = unit.sprite;
-        damage.SetActive(true);
-        typeAtack.GetComponent<Image>().sprite = unit.isMelee ? meleeAtack : notMeleeAtack;
-        strength.SetActive(true);
-        if(unit.isWizard){
-            wizard.SetActive(true);
-            textwizard.GetComponent<Text>().text = _unitData.wizard.ToString();
-        } else {
-            wizard.SetActive(false);
-        }
-        dead.SetActive(false);
-        textDamage.GetComponent<Text>().text = _unitData.damage.ToString();
-        textStrength.GetComponent<Text>().text = _unitData.strength.ToString();
-        textAtack.GetComponent<Text>().text = "";
+        UpdateShow();
     }
 
-    public void StartCageBlock(int _x, int _y) {
-        x = _x;
-        y = _y;
+    public void ActiveCageBlock() {
+        isActive = true;
+        turnColor.GetComponent<Image>().color = new Color(0,1,0,1);
+        //todo
+        statusActive = StatusActive.move;
+    }
+
+    public void NotActiveCageBlock() {
+        isActive = false;
+        turnColor.GetComponent<Image>().color = new Color(0,0,0,0);
+        statusActive = StatusActive.none;
+    }
+
+    public void DeleteUnit() {
+        isUnit = false;
+        unit = null;
+        UpdateShow();
+    }
+
+    public void UpdateShow() {
+        if(isUnit) {
+            playerColor.SetActive(false);
+            UnitData _unitData = unit.GetUnitData();
+            spriteUnit.GetComponent<Image>().sprite = unit.sprite;
+            if(unit.isWizard){
+                wizard.SetActive(true);
+                textwizard.GetComponent<Text>().text = _unitData.wizard.ToString();
+            } else {
+                wizard.SetActive(false);
+            }
+
+            damage.SetActive(true);
+            typeAtack.GetComponent<Image>().sprite = unit.isMelee ? meleeAtack : notMeleeAtack;
+            strength.SetActive(true);
+            textDamage.GetComponent<Text>().text = _unitData.damage.ToString();
+            textStrength.GetComponent<Text>().text = _unitData.strength.ToString();
+        } else {
+            playerColor.SetActive(false);
+            spriteUnit.GetComponent<Image>().sprite = null;
+            wizard.SetActive(false);
+            damage.SetActive(false);
+            strength.SetActive(false);
+        }
+        if (isGuard) {
+            spriteObject.GetComponent<Image>().sprite = Object.sprite;   
+        } else {
+            spriteObject.GetComponent<Image>().sprite = null; 
+        }
     }
 
     private void OnMouseEnter() {
-        if (isGuard)
+        if (isGuard && !isActive && isUnit)
             message.LookCageBlock(new CageBlockData(){
                 unit = unit,
                 Object = Object
@@ -76,6 +114,20 @@ public class CageBlock : MonoBehaviour
         message.NotLookCageBlock();
     }
 
+    private void OnMouseDown() {
+        switch (statusActive) {
+            case StatusActive.move:
+                map.Move(map.idCageBlockUnit, id);
+            break;
+            default:break;
+        }
+    }
+
+}
+
+public enum StatusActive{
+    none,
+    move,
 }
 
 public class CageBlockData {

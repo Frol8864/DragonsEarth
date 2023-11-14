@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
 {
     public GameCont gameCont;
     public CodeUnit codeUnit;
-    public Stat stat;
+    public Stat stat = new Stat(0,0,0,0,0);
     public int strongNow;
     public Sprite sprite;
     public string nameUnit;
@@ -38,6 +38,12 @@ public class Unit : MonoBehaviour
         strongNow = stat.stats[0];
     }
 
+    public int GetSpeed(){
+        //Debug.Log(codeUnit);
+        Stat statArtifact = GetStatArtifact();
+        return stat.stats[4] + statArtifact.stats[4];
+    }
+
     public void AddArtifact(Artifact artifact){
         artifacts.Add(artifact);
         //todo
@@ -51,6 +57,7 @@ public class Unit : MonoBehaviour
                 _stat.stats[j]+=artifacts[i].stat.stats[j];
             }
         }
+        //Debug.Log(_stat.stats[4]);
         return _stat;
     }
 }

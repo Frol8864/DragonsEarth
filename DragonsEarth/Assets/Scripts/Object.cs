@@ -19,10 +19,11 @@ public class Object : MonoBehaviour
     public Stat statGift = new Stat(0,0,0,0,0);
     public int goldGift;
     public Unit unitGift;
+    public bool isGO;
 
     public void CalculateValueObject() {
         //todo
-        value = goldGift * 2 + unitGift.cost * unitGift.cost + 12 * (3 * statGift.stats[0] + 1 * statGift.stats[1] + 2 * statGift.stats[2] + 1 * statGift.stats[3] + 1 * statGift.stats[4]) 
-                + artifactsGift.Count * 10 * 2;
+        value = goldGift + unitGift.cost * unitGift.cost + 6 * (3 * statGift.stats[0] + 1 * statGift.stats[1] + 2 * statGift.stats[2] + 1 * statGift.stats[3] + 1 * statGift.stats[4]) 
+                + artifactsGift.Count * 10 + (isGO?100:0);
     }
 }

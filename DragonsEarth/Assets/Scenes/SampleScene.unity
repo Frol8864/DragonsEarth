@@ -8483,7 +8483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7dc0bd4bbd868fa499280dbfec10625e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68c7d301c75dde648a827a9ecfa56a85, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12085,6 +12085,8 @@ MonoBehaviour:
   - {fileID: 987575282}
   - {fileID: 1355687622}
   generationMap: {fileID: 1707358707}
+  libaryUnit: {fileID: 1707358705}
+  idCageBlockUnit: -1
 --- !u!114 &1707358707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13250,7 +13252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0427bf4702a109f41929ea07518de385, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3dbba3e026164f343a6f9585fbc7c43c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

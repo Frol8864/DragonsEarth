@@ -88,29 +88,82 @@ public class GenerationMap : MonoBehaviour
 
     private List<CodeObject> codeObjects = new List<CodeObject>() {
         CodeObject.prison,
+        CodeObject.prison,
+        CodeObject.prison,
+        
         CodeObject.blacksmith,
         CodeObject.towermagiciansson,
         CodeObject.stable,
         CodeObject.lifetree,
+        
+        CodeObject.blacksmith,
+        CodeObject.towermagiciansson,
+        CodeObject.stable,
+        CodeObject.lifetree,
+        
+        CodeObject.blacksmith,
+        CodeObject.towermagiciansson,
+        CodeObject.stable,
+        CodeObject.lifetree,
+        
+        CodeObject.bank,
+        CodeObject.dragondungeon,
+        CodeObject.crypt,
+        CodeObject.temple,
+        CodeObject.arsenal,
+        
         CodeObject.bank,
         CodeObject.dragondungeon,
         CodeObject.crypt,
         CodeObject.temple,
         CodeObject.arsenal,
     };
+
+    private List<CodeObject> codeObjectsHigh = new List<CodeObject>() {
+        CodeObject.blacksmith,
+        CodeObject.towermagiciansson,
+        CodeObject.stable,
+        CodeObject.lifetree,
+        
+        CodeObject.dragondungeon,
+        CodeObject.temple,
+
+        CodeObject.dragondungeon,
+        CodeObject.temple,
+
+        CodeObject.dragondungeon,
+        CodeObject.temple,
+    };
     
     private List<UnitGuard> unitGuards = new List<UnitGuard>();
-    public CageBlockData GetCageBlockData(){
-        //todo
-        Object _Object = libaryObject.GetObject(codeObjects[Random.Range(0, codeObjects.Count)]);
-        _Object.goldGift = Random.Range(_Object.goldRange[0], _Object.goldRange[1]);
-        _Object.statGift = new Stat(Random.Range(_Object.statRange[0], _Object.statRange[1]),
-                                    Random.Range(_Object.statRange[2], _Object.statRange[3]),
-                                    Random.Range(_Object.statRange[4], _Object.statRange[5]),
-                                    Random.Range(_Object.statRange[6], _Object.statRange[7]),
-                                    Random.Range(_Object.statRange[8], _Object.statRange[9]));
+    public CageBlockData GetCageBlockData(int idCageBlock){
+        Object _Object = new Object();
+        
+        if(idCageBlock == 27 || idCageBlock == 67) {
+            _Object = libaryObject.GetGO();
+        } else {
+            if (idCageBlock <= 29 || idCageBlock >= 65) {
+                _Object = libaryObject.GetObject(codeObjects[Random.Range(0, codeObjects.Count)]);
+                _Object.goldGift = Random.Range(_Object.goldRange[0], _Object.goldRange[1]);
+                _Object.statGift = new Stat(Random.Range(_Object.statRange[0], _Object.statRange[1]),
+                                        Random.Range(_Object.statRange[2], _Object.statRange[3]),
+                                        Random.Range(_Object.statRange[4], _Object.statRange[5]),
+                                        Random.Range(_Object.statRange[6], _Object.statRange[7]),
+                                        Random.Range(_Object.statRange[8], _Object.statRange[9]));
+            } else {
+                _Object = libaryObject.GetObject(codeObjectsHigh[Random.Range(0, codeObjectsHigh.Count)]);
+                _Object.goldGift = Random.Range(_Object.goldRange[0] * 2, _Object.goldRange[1]);
+                _Object.statGift = new Stat(Random.Range(_Object.statRange[0] * 2, _Object.statRange[1]),
+                                        Random.Range(_Object.statRange[2] * 2, _Object.statRange[3]),
+                                        Random.Range(_Object.statRange[4] * 2, _Object.statRange[5]),
+                                        Random.Range(_Object.statRange[6] * 2, _Object.statRange[7]),
+                                        Random.Range(_Object.statRange[8] * 2, _Object.statRange[9]));
+            }
+        }
+
         _Object.CalculateValueObject();
         _Object.nameObject += " " + _Object.value;
+        
         List<UnitGuard> _unitGuards = GetUnitGuards(_Object.value);
         UnitGuard _unitGuard = _unitGuards[Random.Range(0, _unitGuards.Count)];
         Unit _unit = libaryUnit.GetUnit(_unitGuard.codeUnit);
@@ -141,7 +194,7 @@ public class GenerationMap : MonoBehaviour
                         for(int iW = 0; iW < 1; iW++) {
                             UnitGuard _unitGuard = new UnitGuard(){
                                 codeUnit = codeUnits[iU],
-                                artifactGuard = libraryArtifact.GetArtifactGuard(iS,iAt,iAr,iW,0),
+                                artifactGuard = libraryArtifact.GetArtifactGuard(iS,iAt,iAr+3,iW,5),
                                 libaryUnit = libaryUnit
                             };
                             _unitGuard.CalculateValueGuard();
@@ -165,6 +218,6 @@ public class UnitGuard{
         _unit.AddArtifact(artifactGuard);
         UnitData _unitData = _unit.GetUnitData();
         //todo
-        value = _unitData.strength  * (_unit.isMelee ? _unitData.damage : _unitData.damage / 2 * 3);
+        value = (_unitData.strength-3)  * (_unit.isMelee ? _unitData.damage : _unitData.damage / 2 * 3);
     }
 }

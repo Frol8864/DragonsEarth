@@ -83,10 +83,24 @@ public class LibaryObject : MonoBehaviour
         CodeUnit.stonedragon
     };
 
+    public Object GetGO(){
+        Object Object = new Object();
+        Object.nameObject = "Главные врата";
+        Object.idPlayer = -1;
+        Object.sprite = spritesObject.GetSprite("GO");
+        Object.isGO = true;
+        Object.statRange = new List<int>(){0,0,0,0,0,0,0,0,0,0};
+        Object.goldRange = new List<int>(){0,0};
+        Object.artifactsGift = new List<Artifact>();
+        Object.skillGift = new Skill();
+        Object.unitGift = new Unit();
+        return Object;
+    }
     public Object GetObject(CodeObject codeObject){
         Object Object = new Object();
         Object.idPlayer = -1;
         Object.sprite = spritesObject.GetSprite(codeObject.ToString());
+        Object.isGO = false;
         switch (codeObject) {
             case CodeObject.prison:
                 Object.nameObject = "Тюрьма";
@@ -94,7 +108,6 @@ public class LibaryObject : MonoBehaviour
                 Object.goldRange = new List<int>(){0,0};
                 Object.artifactsGift = new List<Artifact>();
                 Object.skillGift = new Skill();
-                Object.unitGift = new Unit();
                 Object.unitGift = libaryUnit.GetUnit(codeUnits[Random.Range(0,codeUnits.Count)]);
             break;
             case CodeObject.blacksmith:
@@ -132,7 +145,7 @@ public class LibaryObject : MonoBehaviour
             case CodeObject.bank:
                 Object.nameObject = "Банк Гоблинов";
                 Object.statRange = new List<int>(){0,0,0,0,0,0,0,0,0,0};
-                Object.goldRange = new List<int>(){15,45};
+                Object.goldRange = new List<int>(){15,46};
                 Object.artifactsGift = new List<Artifact>();
                 Object.skillGift = new Skill();
                 Object.unitGift = new Unit();
@@ -140,7 +153,7 @@ public class LibaryObject : MonoBehaviour
             case CodeObject.dragondungeon:
                 Object.nameObject = "Подземелье Драконов";
                 Object.statRange = new List<int>(){0,0,0,0,0,0,0,0,0,0};
-                Object.goldRange = new List<int>(){10,30};
+                Object.goldRange = new List<int>(){10,31};
                 Object.artifactsGift = new List<Artifact>(){
                     new Artifact(),
                     new Artifact(),
@@ -152,7 +165,7 @@ public class LibaryObject : MonoBehaviour
             case CodeObject.crypt:
                 Object.nameObject = "Склеп";
                 Object.statRange = new List<int>(){0,0,0,0,0,0,0,0,0,0};
-                Object.goldRange = new List<int>(){5,10};
+                Object.goldRange = new List<int>(){5,11};
                 Object.artifactsGift = new List<Artifact>(){
                     new Artifact()
                 };
@@ -162,7 +175,7 @@ public class LibaryObject : MonoBehaviour
             case CodeObject.temple:
                 Object.nameObject = "Храм";
                 Object.statRange = new List<int>(){0,0,0,0,0,0,0,0,0,0};
-                Object.goldRange = new List<int>(){10,20};
+                Object.goldRange = new List<int>(){10,21};
                 Object.artifactsGift = new List<Artifact>(){
                     new Artifact(),
                     new Artifact()

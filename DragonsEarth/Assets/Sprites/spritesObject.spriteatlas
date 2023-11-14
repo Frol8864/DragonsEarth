@@ -42,6 +42,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a4cb7db08fd44b64f8537238a27b3977, type: 3}
   - {fileID: 21300000, guid: 957cd8122c3a10c4f9bd79a1a06df590, type: 3}
   - {fileID: 21300000, guid: e010b6737275078408eb21288f13a401, type: 3}
+  - {fileID: 21300000, guid: 43196083a920fa441a8c1ae460b6c480, type: 3}
   - {fileID: 21300000, guid: 0624f535c3280584881335062f0d0e64, type: 3}
   - {fileID: 21300000, guid: bf9c1bd860936d945860740c1ca3ae8c, type: 3}
   - {fileID: 21300000, guid: 632f2f39f902116498f5c21bf65a1a03, type: 3}
@@ -53,6 +54,7 @@ SpriteAtlas:
   - towermagiciansson
   - dragondungeon
   - blacksmith
+  - GO
   - prison
   - stable
   - bank

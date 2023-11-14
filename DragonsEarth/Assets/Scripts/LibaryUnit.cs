@@ -24,7 +24,8 @@ public class LibaryUnit : MonoBehaviour
     public Unit GetUnit(CodeUnit codeUnit) {
         Unit unit = new Unit();
         unit.gameCont = gameCont;
-        unit.id = -1;
+        unit.id = idUnit;
+        idUnit++;
         unit.idPlayer = -1;
         unit.sprite = spritesUnit.GetSprite(codeUnit.ToString());
         unit.codeUnit = codeUnit;
