@@ -27,11 +27,19 @@ public class GameCont : MonoBehaviour
 
 
         map.StartMap();
+
         Unit _unit = libaryUnit.GetUnit(CodeUnit.knight);
         _unit.idPlayer = 0;
         _unit.strongNow+=10;
         players[0].units.Add(_unit);
         map.AddUnit(_unit, 15);
+
+        _unit = libaryUnit.GetUnit(CodeUnit.cyclop);
+        _unit.idPlayer = 1;
+        _unit.strongNow+=10;
+        players[0].units.Add(_unit);
+        map.AddUnit(_unit, 16);
+
         queueCont.StartQueueCont();
     }
 

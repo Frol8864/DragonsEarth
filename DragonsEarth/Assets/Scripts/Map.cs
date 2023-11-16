@@ -49,20 +49,28 @@ public class Map : MonoBehaviour
         idCageBlockUnit = -1;
         Unit _unit = new Unit();
         for(int i = 0; i < cageBlocks.Count; i++) {
-            //Debug.Log(cageBlocks[i].unit.id);
             if(cageBlocks[i].isUnit && cageBlocks[i].unit.id == idUnit) {
                 idCageBlockUnit = i;
                 _unit = cageBlocks[i].unit;
-                //Debug.Log(_unit.codeUnit);
                 break;
             }
         }
         int speed = _unit.GetSpeed();
         for(int i = 0; i < cageBlocks.Count; i++) {
-            if(GetDelta(idCageBlockUnit, i) <= speed && GetDelta(idCageBlockUnit, i) != 0) {
+            List<BattleData> battleDatas = new List<BattleData>(){
+                new BattleData(){ isDeath = false},
+                new BattleData(){ isDeath = false},
+            };
+            if(cageBlocks[i].isUnit)
+                battleDatas = battleCont.GetBattleDatas(new List<int>(){idCageBlockUnit, i});
+
+            if(GetDelta(idCageBlockUnit, i) <= speed && GetDelta(idCageBlockUnit, i) != 0 && 
+                (cageBlocks[i].isUnit && cageBlocks[idCageBlockUnit].isUnit && cageBlocks[i].unit.idPlayer != cageBlocks[idCageBlockUnit].unit.idPlayer 
+                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit)  && (!cageBlocks[i].isUnit || battleDatas[0].isDeath || battleDatas[1].isDeath)) {
                 cageBlocks[i].ActiveCageBlock();
             }
-            if(GetDelta(idCageBlockUnit, i) == 0) {
+            if((GetDelta(idCageBlockUnit, i) == 0) || ((cageBlocks[i].isUnit && cageBlocks[idCageBlockUnit].isUnit && cageBlocks[i].unit.idPlayer != cageBlocks[idCageBlockUnit].unit.idPlayer 
+                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit) && (cageBlocks[i].isUnit && !battleDatas[0].isDeath && !battleDatas[1].isDeath))) {
                 cageBlocks[i].ActiveCageBlockUnitTurn();
             }
         }
@@ -106,6 +114,7 @@ public class Map : MonoBehaviour
             cageBlocks[idCageBlocks[0]].unit = null;
         } 
         cageBlocks[idCageBlocks[0]].UpdateShow();
+        queueCont.UpdateShow();
         NotActiveMap();
         if (battleDatas[1].isDeath && !battleDatas[0].isDeath)
             cageBlocks[idCageBlocks[1]].ActiveCageBlockUnitTurn();
@@ -123,7 +132,7 @@ public class Map : MonoBehaviour
         if (idCageBlock/xMax != 0 && cageBlocks[idCageBlock - xMax].isUnit) {
             idCageBlockNears.Add(idCageBlock - xMax);
         }
-        if (idCageBlock/xMax != cageBlocks.Count/xMax && cageBlocks[idCageBlock + xMax].isUnit) {
+        if (idCageBlock/xMax != (cageBlocks.Count-1)/xMax && cageBlocks[idCageBlock + xMax].isUnit) {
             idCageBlockNears.Add(idCageBlock + xMax);
         }
 

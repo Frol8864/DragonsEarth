@@ -50,8 +50,11 @@ public class QueueCont : MonoBehaviour
             break;
             default: break;
         }
-        if(unitQueues.Count > 0)
+        SortUnit();
+        if(unitQueues.Count > 0){
             message.StartTurn(unitQueues[0].unit);
+            map.TurnUnit(unitQueues[0].unit.id);
+        }
         UpdateShow();
     }
     private void EndBattleTurn(){
@@ -61,8 +64,8 @@ public class QueueCont : MonoBehaviour
             unitQueues.RemoveAt(0);
         }
         SortUnit();
-        if(unitQueues.Count > 0 && !unitQueues[0].isTurn){
-            //Debug.Log(unitQueues[0].unit.nameUnit + unitQueues[0].unit.idPlayer.ToString());
+        if(unitQueues.Count > 0 && !unitQueues[0].isTurn || unitQueues.Count == 0){
+            Debug.Log("start");
             UpdateUnitForStartRound();
         }
         if(unitQueues.Count > 0)
@@ -78,7 +81,7 @@ public class QueueCont : MonoBehaviour
         }
     }
 
-    private void UpdateShow() {
+    public void UpdateShow() {
         fon.GetComponent<Image>().color = gameCont.players[idPlayerTurn].color;
         foreach(UnitBlock _unitBlock in unitBlocks){
             _unitBlock.ShowEmpty();
