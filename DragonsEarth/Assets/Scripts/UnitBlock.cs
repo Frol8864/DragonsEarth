@@ -32,6 +32,7 @@ public class UnitBlock : MonoBehaviour
         damage.SetActive(false);
         initiative.SetActive(false);
         strength.SetActive(false);
+        wizard.SetActive(false);
         textRound.GetComponent<Text>().text = "";
         unit = null;
     }

@@ -49,6 +49,12 @@ public class Message : MonoBehaviour
         message.GetComponent<Text>().text = strLook;
     }
 
+    public void LookCageBlockBattle(CageBlockData _cageBlockData, List<BattleData> _battleDatas){
+        strLook = (_battleDatas[1].isDeath ? _battleDatas[0].nameUnit + " освободит " + _cageBlockData.Object.nameObject 
+                                            : _battleDatas[1].nameUnit + " продолжит защищать " + _cageBlockData.Object.nameObject);
+        message.GetComponent<Text>().text = strLook;
+    }
+
     public void NotLookCageBlock() {
         message.GetComponent<Text>().text = strMessage;
     }

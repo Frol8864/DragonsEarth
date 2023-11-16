@@ -12,6 +12,7 @@ public class QueueCont : MonoBehaviour
     [SerializeField] GameObject fon;
     [SerializeField] List<UnitBlock> unitBlocks;
     [SerializeField] Message message;
+    [SerializeField] Map map;
     
     public int idPlayerTurn;
     public int idRound;
@@ -24,12 +25,24 @@ public class QueueCont : MonoBehaviour
         idPlayerTurn = 1;
         idRound = 0;
         UpdateUnitForStartRound();
-        idPlayerTurn = unitQueues[0].unit.idPlayer;
+        if(unitQueues.Count > 0)
+            idPlayerTurn = unitQueues[0].unit.idPlayer;
+        UpdateShow();
+    }
+
+    public void DeathUnit(int _idUnit){
+        for(int i = 0; i < unitQueues.Count; i++) {
+            if(_idUnit == unitQueues[i].unit.id){
+                unitQueues.RemoveAt(i);
+                i--;
+            }  
+        }
         UpdateShow();
     }
 
     public void EndTurn() {
-        message.EndTurn(unitQueues[0].unit);
+        if(unitQueues.Count > 0)
+            message.EndTurn(unitQueues[0].unit);
         //todo
         switch(gameCont.statusGame){
             case StatusGame.battle: 
@@ -37,20 +50,25 @@ public class QueueCont : MonoBehaviour
             break;
             default: break;
         }
-        message.StartTurn(unitQueues[0].unit);
+        if(unitQueues.Count > 0)
+            message.StartTurn(unitQueues[0].unit);
         UpdateShow();
     }
-
     private void EndBattleTurn(){
         idFirstUnitBlock = 0;
-        unitQueues[0].isTurn = false;
-        unitQueues.RemoveAt(0);
+        if(unitQueues.Count > 0){
+            unitQueues[0].isTurn = false;
+            unitQueues.RemoveAt(0);
+        }
         SortUnit();
-        if(!unitQueues[0].isTurn){
+        if(unitQueues.Count > 0 && !unitQueues[0].isTurn){
             //Debug.Log(unitQueues[0].unit.nameUnit + unitQueues[0].unit.idPlayer.ToString());
             UpdateUnitForStartRound();
         }
-        idPlayerTurn = unitQueues[0].unit.idPlayer; 
+        if(unitQueues.Count > 0)
+            idPlayerTurn = unitQueues[0].unit.idPlayer;
+        else 
+            idPlayerTurn = (idPlayerTurn + 1) % 2; 
     }
 
     public void ChangeIdFirstUnitBlock (int x) {
@@ -105,7 +123,10 @@ public class QueueCont : MonoBehaviour
             }
         }
         SortUnit();
-        message.StartTurn(unitQueues[0].unit);
+        if(unitQueues.Count > 0){
+            message.StartTurn(unitQueues[0].unit);
+            map.TurnUnit(unitQueues[0].unit.id);
+        }
     }
 
     private void SortUnit() {

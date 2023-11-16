@@ -333,7 +333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5046073290988463111
 RectTransform:
   m_ObjectHideFlags: 0
@@ -349,10 +349,10 @@ RectTransform:
   m_Father: {fileID: 5431469481102028987}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4075477669968620357
 CanvasRenderer:
@@ -375,15 +375,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: cc6d5ab3562b9d84ca95021afe3370f7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -502,8 +502,9 @@ MonoBehaviour:
   meleeAtack: {fileID: 21300000, guid: 270e235af388f1a4daedb7d4b4fc0d1c, type: 3}
   notMeleeAtack: {fileID: 21300000, guid: 8f6ab68968378fe4c87a6afd6dd0f1a6, type: 3}
   message: {fileID: 0}
-  x: 0
-  y: 0
+  unit: {fileID: 0}
+  isUnit: 0
+  map: {fileID: 0}
 --- !u!61 &2236764915504379003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -610,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23779458, g: 0.8862745, b: 0.172549, a: 1}
+  m_Color: {r: 0.23779458, g: 0.8862745, b: 0.172549, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1000,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1008,7 +1009,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f7915b7ac7519946b0b276fde875bab, type: 3}
+    m_Font: {fileID: 12800000, guid: 5a0d8ab4950f6b24fb3dfe076cdda46b, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 1

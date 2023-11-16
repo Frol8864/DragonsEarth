@@ -28,7 +28,7 @@ public class CageBlock : MonoBehaviour
 
     public Unit unit;
     public bool isUnit;
-    private Object Object;
+    public Object Object;
     private bool isGuard;
     private StatusActive statusActive;
     private bool isActive;
@@ -54,21 +54,44 @@ public class CageBlock : MonoBehaviour
 
     public void ActiveCageBlock() {
         isActive = true;
-        turnColor.GetComponent<Image>().color = new Color(0,1,0,1);
+        turnColor.GetComponent<Image>().color = new Color(0,1,0,0.3f);
         //todo
         statusActive = StatusActive.move;
+    }
+
+    public void ActiveCageBlockUnitTurn(){
+        isActive = false;
+        turnColor.GetComponent<Image>().color = new Color(1,1,0,1);
+        statusActive = StatusActive.none;
     }
 
     public void NotActiveCageBlock() {
         isActive = false;
         turnColor.GetComponent<Image>().color = new Color(0,0,0,0);
         statusActive = StatusActive.none;
+        dead.SetActive(false);
+        textAtack.GetComponent<Text>().text = "";
     }
 
     public void DeleteUnit() {
         isUnit = false;
         unit = null;
         UpdateShow();
+    }
+
+    public void ShowDamageCageBlocks(BattleData battleData){
+        if(battleData.isDeath){
+            dead.SetActive(true);
+            textAtack.GetComponent<Text>().text = "";
+        } else {
+            dead.SetActive(false);
+            textAtack.GetComponent<Text>().text = battleData.damage.ToString();
+        }
+    }
+
+    public void NoShowDamageCageBlocks(){
+        dead.SetActive(false);
+        textAtack.GetComponent<Text>().text = "";
     }
 
     public void UpdateShow() {
@@ -108,16 +131,37 @@ public class CageBlock : MonoBehaviour
                 unit = unit,
                 Object = Object
             });
+        
+        if (isActive){
+            turnColor.GetComponent<Image>().color = new Color(0,1,0,1);
+        }
+
+        if (isUnit && isActive){
+            map.ShowDamageCageBlocks(id);
+        }
+
     }
 
     private void OnMouseExit() {
         message.NotLookCageBlock();
+        if (isActive){
+            turnColor.GetComponent<Image>().color = new Color(0,1,0,0.3f);
+        }
+
+        if (isUnit && isActive){
+            NoShowDamageCageBlocks();
+            map.NoShowDamageCageBlockUnitTurn();
+        }
     }
 
     private void OnMouseDown() {
         switch (statusActive) {
             case StatusActive.move:
-                map.Move(map.idCageBlockUnit, id);
+                if(isUnit) {
+                    map.MoveBattle(id);
+                } else {
+                    map.Move(map.idCageBlockUnit, id);
+                }
             break;
             default:break;
         }

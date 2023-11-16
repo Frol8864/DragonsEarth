@@ -17,15 +17,22 @@ public class GameCont : MonoBehaviour
         StartPlayers();
         //todo
         statusGame = StatusGame.battle;
-        libaryUnit.AddUnit(0,CodeUnit.hobbit);
+        /*libaryUnit.AddUnit(0,CodeUnit.hobbit);
         libaryUnit.AddUnit(1,CodeUnit.fairy);
         libaryUnit.AddUnit(0,CodeUnit.sabermaster);
         libaryUnit.AddUnit(1,CodeUnit.archer);
         libaryUnit.AddUnit(0,CodeUnit.druid);
         libaryUnit.AddUnit(1,CodeUnit.unicorn);
-        libaryUnit.AddUnit(0,CodeUnit.ent);
-        queueCont.StartQueueCont();
+        libaryUnit.AddUnit(0,CodeUnit.ent);*/
+
+
         map.StartMap();
+        Unit _unit = libaryUnit.GetUnit(CodeUnit.knight);
+        _unit.idPlayer = 0;
+        _unit.strongNow+=10;
+        players[0].units.Add(_unit);
+        map.AddUnit(_unit, 15);
+        queueCont.StartQueueCont();
     }
 
     private void StartPlayers(){

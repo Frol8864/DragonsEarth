@@ -9,9 +9,12 @@ using Unity.VisualScripting;
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] List<CageBlock> cageBlocks;
+    public List<CageBlock> cageBlocks;
     [SerializeField] GenerationMap generationMap;
     [SerializeField] LibaryUnit libaryUnit;
+    [SerializeField] BattleCont battleCont;
+    [SerializeField] Message message;
+    [SerializeField] QueueCont queueCont;
     private int xMax = 5;
     public int idCageBlockUnit = -1;
 
@@ -22,9 +25,10 @@ public class Map : MonoBehaviour
             cageBlocks[i].AddObject(generationMap.GetCageBlockData(i), this, i);
         }
 
-        Unit _unit = libaryUnit.GetUnit(CodeUnit.demon);
+        /*Unit _unit = libaryUnit.GetUnit(CodeUnit.demon);
+        _unit.idPlayer = 0;
         AddUnit(_unit, 16);
-        TurnUnit(_unit.id);
+        TurnUnit(_unit.id);*/
 
         /*cageBlocks[10].DeleteUnit();
         cageBlocks[12].ActiveCageBlock();
@@ -55,8 +59,11 @@ public class Map : MonoBehaviour
         }
         int speed = _unit.GetSpeed();
         for(int i = 0; i < cageBlocks.Count; i++) {
-            if(GetDelta(idCageBlockUnit, i) <= speed) {
+            if(GetDelta(idCageBlockUnit, i) <= speed && GetDelta(idCageBlockUnit, i) != 0) {
                 cageBlocks[i].ActiveCageBlock();
+            }
+            if(GetDelta(idCageBlockUnit, i) == 0) {
+                cageBlocks[i].ActiveCageBlockUnitTurn();
             }
         }
     }
@@ -69,6 +76,71 @@ public class Map : MonoBehaviour
         cageBlocks[idWas].unit = null;
         cageBlocks[idWas].UpdateShow();
         NotActiveMap();
+    }
+
+    public void MoveBattle(int _idCageBlock){
+        List<int> idCageBlocks = new List<int>(){idCageBlockUnit ,_idCageBlock};
+        List<BattleData> battleDatas = battleCont.GetBattleDatas(idCageBlocks);
+        
+        for(int i = 0; i < idCageBlocks.Count; i++) {
+            if(battleDatas[i].isDeath)
+                queueCont.DeathUnit(cageBlocks[idCageBlocks[i]].unit.id);
+        }
+
+        for(int i = 0; i < idCageBlocks.Count; i++) {
+            cageBlocks[idCageBlocks[i]].unit.strongNow+=battleDatas[i].damage;
+        }
+
+        if (battleDatas[1].isDeath && !battleDatas[0].isDeath) {
+            cageBlocks[idCageBlocks[1]].isUnit = true;
+            cageBlocks[idCageBlocks[1]].unit = cageBlocks[idCageBlocks[0]].unit;
+        }
+        if (battleDatas[1].isDeath && battleDatas[0].isDeath){
+            cageBlocks[idCageBlocks[1]].isUnit = false;
+            cageBlocks[idCageBlocks[1]].unit = null;
+        }
+        cageBlocks[idCageBlocks[1]].UpdateShow();
+
+        if (battleDatas[0].isDeath || battleDatas[1].isDeath) {
+            cageBlocks[idCageBlocks[0]].isUnit = false;
+            cageBlocks[idCageBlocks[0]].unit = null;
+        } 
+        cageBlocks[idCageBlocks[0]].UpdateShow();
+        NotActiveMap();
+        if (battleDatas[1].isDeath && !battleDatas[0].isDeath)
+            cageBlocks[idCageBlocks[1]].ActiveCageBlockUnitTurn();
+    }
+
+    public List<int> GetidCageBlockNear(int idCageBlock){
+        List<int> idCageBlockNears = new List<int>();
+
+        if (idCageBlock%xMax != 0 && cageBlocks[idCageBlock - 1].isUnit) {
+            idCageBlockNears.Add(idCageBlock - 1);
+        }
+        if (idCageBlock%xMax != 4 && cageBlocks[idCageBlock + 1].isUnit) {
+            idCageBlockNears.Add(idCageBlock + 1);
+        }
+        if (idCageBlock/xMax != 0 && cageBlocks[idCageBlock - xMax].isUnit) {
+            idCageBlockNears.Add(idCageBlock - xMax);
+        }
+        if (idCageBlock/xMax != cageBlocks.Count/xMax && cageBlocks[idCageBlock + xMax].isUnit) {
+            idCageBlockNears.Add(idCageBlock + xMax);
+        }
+
+        return idCageBlockNears;
+    }
+
+    public void ShowDamageCageBlocks(int _idCageBlockUnit) {
+        List<BattleData> battleDatas = battleCont.GetBattleDatas(new List<int>(){idCageBlockUnit, _idCageBlockUnit});
+        cageBlocks[idCageBlockUnit].ShowDamageCageBlocks(battleDatas[0]);
+        cageBlocks[_idCageBlockUnit].ShowDamageCageBlocks(battleDatas[1]);
+        message.LookCageBlockBattle(new CageBlockData(){
+                unit = null,
+                Object = cageBlocks[_idCageBlockUnit].Object}, battleDatas);
+    }
+
+    public void NoShowDamageCageBlockUnitTurn(){
+        cageBlocks[idCageBlockUnit].NoShowDamageCageBlocks();
     }
 
     private int GetDelta(int id1, int id2){

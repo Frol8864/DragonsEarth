@@ -25,12 +25,16 @@ public class Unit : MonoBehaviour
     public UnitData GetUnitData(){
         Stat statArtifact = GetStatArtifact();
         return new UnitData(){
-            statAll = new Stat(stat.stats[0],stat.stats[1],stat.stats[2],stat.stats[3],stat.stats[4]),
+            statAll = new Stat(stat.stats[0] + statArtifact.stats[0],stat.stats[1] + statArtifact.stats[1],
+                                stat.stats[2] + statArtifact.stats[2],stat.stats[3] + statArtifact.stats[3],stat.stats[4] + statArtifact.stats[4]),
             strongNowAll = strongNow,
             strength = strongNow + stat.stats[2] + statArtifact.stats[2],
             initiative = strongNow + stat.stats[4] + statArtifact.stats[4],
             damage = stat.stats[1] + strongNow + statArtifact.stats[1],
-            wizard = strongNow + stat.stats[3] + statArtifact.stats[3]
+            wizard = strongNow + stat.stats[3] + statArtifact.stats[3],
+            idPlayer = idPlayer,
+            isMelee = isMelee,
+            nameUnit = nameUnit
         };
     }
 
@@ -69,4 +73,7 @@ public class UnitData{
     public int initiative;
     public int damage;
     public int wizard;
+    public int idPlayer;
+    public bool isMelee;
+    public string nameUnit;
 }

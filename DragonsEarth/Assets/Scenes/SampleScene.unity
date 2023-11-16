@@ -9018,6 +9018,7 @@ MonoBehaviour:
   - {fileID: 817815774}
   - {fileID: 1953552026}
   message: {fileID: 2120962112}
+  map: {fileID: 1707358706}
   idPlayerTurn: 0
   idRound: 0
 --- !u!1001 &1279911288
@@ -11918,6 +11919,7 @@ GameObject:
   - component: {fileID: 1707358707}
   - component: {fileID: 1707358708}
   - component: {fileID: 1707358709}
+  - component: {fileID: 1707358710}
   m_Layer: 5
   m_Name: Scripts
   m_TagString: Untagged
@@ -12086,6 +12088,9 @@ MonoBehaviour:
   - {fileID: 1355687622}
   generationMap: {fileID: 1707358707}
   libaryUnit: {fileID: 1707358705}
+  battleCont: {fileID: 1707358710}
+  message: {fileID: 2120962112}
+  queueCont: {fileID: 1266691803}
   idCageBlockUnit: -1
 --- !u!114 &1707358707
 MonoBehaviour:
@@ -12129,6 +12134,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8234a70d49b36149a18c2e87206438b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1707358710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707358702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99a3f2ce38549f459408103adf8c212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 1707358706}
 --- !u!1001 &1722174108
 PrefabInstance:
   m_ObjectHideFlags: 0
