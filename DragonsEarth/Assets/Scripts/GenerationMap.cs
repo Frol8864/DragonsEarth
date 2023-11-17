@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 
 public class GenerationMap : MonoBehaviour
 {
+    [SerializeField] GameCont gameCont;
     [SerializeField] LibaryUnit libaryUnit;
     [SerializeField] LibaryObject libaryObject;
     [SerializeField] LibraryArtifact libraryArtifact;
@@ -197,7 +198,7 @@ public class GenerationMap : MonoBehaviour
                                 artifactGuard = libraryArtifact.GetArtifactGuard(iS,iAt,iAr+3,iW,5),
                                 libaryUnit = libaryUnit
                             };
-                            _unitGuard.CalculateValueGuard();
+                            _unitGuard.CalculateValueGuard(gameCont);
                             unitGuards.Add(_unitGuard);
                         }   
                     }
@@ -213,10 +214,10 @@ public class UnitGuard{
     public Artifact artifactGuard;
     public LibaryUnit libaryUnit;
 
-    public void CalculateValueGuard(){
+    public void CalculateValueGuard(GameCont gameCont){
         Unit _unit = libaryUnit.GetUnit(codeUnit);
         _unit.AddArtifact(artifactGuard);
-        UnitData _unitData = _unit.GetUnitData();
+        UnitData _unitData = _unit.GetUnitData(gameCont);
         //todo
         value = (_unitData.strength-3)  * (_unit.isMelee ? _unitData.damage : _unitData.damage / 2 * 3);
     }

@@ -29,13 +29,15 @@ public class CageBlock : MonoBehaviour
     public Unit unit;
     public bool isUnit;
     public Object Object;
-    private bool isGuard;
+    public bool isGuard;
     private StatusActive statusActive;
     private bool isActive;
     private int id;
     public Map map;
+    public GameCont gameCont;
 
-    public void AddObject(CageBlockData _cageBlockData, Map _map, int _id) {
+    public void AddObject(CageBlockData _cageBlockData, Map _map, int _id, GameCont _gameCont) {
+        gameCont = _gameCont;
         map = _map;
         id = _id;
         isGuard = true;
@@ -46,7 +48,7 @@ public class CageBlock : MonoBehaviour
         textAtack.GetComponent<Text>().text = "";
         unit = _cageBlockData.unit;
         Object = _cageBlockData.Object;
-        UnitData _unitData = unit.GetUnitData();
+        UnitData _unitData = unit.GetUnitData(gameCont);
         turnColor.GetComponent<Image>().color = new Color(0,0,0,0);
         //fon.GetComponent<Image>().sprite = unit.sprite;
         UpdateShow();
@@ -97,7 +99,7 @@ public class CageBlock : MonoBehaviour
     public void UpdateShow() {
         if(isUnit) {
             playerColor.SetActive(false);
-            UnitData _unitData = unit.GetUnitData();
+            UnitData _unitData = unit.GetUnitData(gameCont);
             spriteUnit.GetComponent<Image>().sprite = unit.sprite;
             if(unit.isWizard){
                 wizard.SetActive(true);

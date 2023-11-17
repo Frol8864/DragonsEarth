@@ -65,7 +65,6 @@ public class QueueCont : MonoBehaviour
         }
         SortUnit();
         if(unitQueues.Count > 0 && !unitQueues[0].isTurn || unitQueues.Count == 0){
-            Debug.Log("start");
             UpdateUnitForStartRound();
         }
         if(unitQueues.Count > 0)
@@ -150,7 +149,7 @@ public class QueueCont : MonoBehaviour
 
             bool isAdd = false;
             for(int j = 0; j < _unitQueues.Count; j++) {
-                if(!isAdd && _unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
+                if(!isAdd && _unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData(gameCont).initiative){
                     unitQueues.Add(_unitQueues[j]);
                     _unitQueues.RemoveAt(j);
                     _idPlayerTurn = (_idPlayerTurn+1)%2;
@@ -166,7 +165,7 @@ public class QueueCont : MonoBehaviour
 
             bool isAdd = false;
             for(int j = 0; j < _unitQueues.Count; j++) {
-                if(!isAdd && !_unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData().initiative){
+                if(!isAdd && !_unitQueues[j].isTurn && _unitQueues[j].unit.idPlayer == _idPlayerTurn && maxs[_idPlayerTurn] == _unitQueues[j].unit.GetUnitData(gameCont).initiative){
                     unitQueues.Add(_unitQueues[j]);
                     _unitQueues.RemoveAt(j);
                     _idPlayerTurn = (_idPlayerTurn+1)%2;
@@ -179,8 +178,8 @@ public class QueueCont : MonoBehaviour
     private int GetMaxInitiative(int _idPlayer, List<UnitQueue> _unitQueues,bool flagTurn) {
         int max = 0;
         foreach(UnitQueue _unitQueue in _unitQueues){
-            if(_unitQueue.isTurn == flagTurn && _unitQueue.unit.idPlayer == _idPlayer && max < _unitQueue.unit.GetUnitData().initiative){
-                max = _unitQueue.unit.GetUnitData().initiative;
+            if(_unitQueue.isTurn == flagTurn && _unitQueue.unit.idPlayer == _idPlayer && max < _unitQueue.unit.GetUnitData(gameCont).initiative){
+                max = _unitQueue.unit.GetUnitData(gameCont).initiative;
             }
         }
         return max;

@@ -226,8 +226,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ab32e4c103ae124478a64d406ab2f090, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -504,7 +504,10 @@ MonoBehaviour:
   message: {fileID: 0}
   unit: {fileID: 0}
   isUnit: 0
+  Object: {fileID: 0}
+  isGuard: 0
   map: {fileID: 0}
+  gameCont: {fileID: 0}
 --- !u!61 &2236764915504379003
 BoxCollider2D:
   m_ObjectHideFlags: 0

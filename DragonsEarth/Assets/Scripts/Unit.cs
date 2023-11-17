@@ -22,16 +22,21 @@ public class Unit : MonoBehaviour
     public bool isMelee; 
     public List<Artifact> artifacts = new List<Artifact>();
 
-    public UnitData GetUnitData(){
+    public UnitData GetUnitData(GameCont gameCont){
         Stat statArtifact = GetStatArtifact();
+        Stat statPlayer = new Stat(0,0,0,0,0);
+        if(idPlayer != -1){
+            statPlayer = gameCont.players[idPlayer].stat;
+        }
         return new UnitData(){
-            statAll = new Stat(stat.stats[0] + statArtifact.stats[0],stat.stats[1] + statArtifact.stats[1],
-                                stat.stats[2] + statArtifact.stats[2],stat.stats[3] + statArtifact.stats[3],stat.stats[4] + statArtifact.stats[4]),
+            statAll = new Stat(stat.stats[0] + statArtifact.stats[0] + statPlayer.stats[0],stat.stats[1] + statArtifact.stats[1] + statPlayer.stats[1],
+                                stat.stats[2] + statArtifact.stats[2] + statPlayer.stats[2],stat.stats[3] + statArtifact.stats[3] + statPlayer.stats[3],
+                                stat.stats[4] + statArtifact.stats[4] + statPlayer.stats[4]),
             strongNowAll = strongNow,
-            strength = strongNow + stat.stats[2] + statArtifact.stats[2],
-            initiative = strongNow + stat.stats[4] + statArtifact.stats[4],
-            damage = stat.stats[1] + strongNow + statArtifact.stats[1],
-            wizard = strongNow + stat.stats[3] + statArtifact.stats[3],
+            strength = strongNow + stat.stats[2] + statArtifact.stats[2] + statPlayer.stats[2],
+            initiative = strongNow + stat.stats[4] + statArtifact.stats[4] + statPlayer.stats[4],
+            damage = stat.stats[1] + strongNow + statArtifact.stats[1] + statPlayer.stats[1],
+            wizard = strongNow + stat.stats[3] + statArtifact.stats[3] + statPlayer.stats[3],
             idPlayer = idPlayer,
             isMelee = isMelee,
             nameUnit = nameUnit

@@ -12091,6 +12091,7 @@ MonoBehaviour:
   battleCont: {fileID: 1707358710}
   message: {fileID: 2120962112}
   queueCont: {fileID: 1266691803}
+  gameCont: {fileID: 1707358704}
   idCageBlockUnit: -1
 --- !u!114 &1707358707
 MonoBehaviour:
@@ -12104,6 +12105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d78da6bd329214f9d60cd769fc2206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameCont: {fileID: 0}
   libaryUnit: {fileID: 1707358705}
   libaryObject: {fileID: 1707358708}
   libraryArtifact: {fileID: 1707358709}
@@ -12147,6 +12149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1707358706}
+  gameCont: {fileID: 1707358704}
 --- !u!1001 &1722174108
 PrefabInstance:
   m_ObjectHideFlags: 0

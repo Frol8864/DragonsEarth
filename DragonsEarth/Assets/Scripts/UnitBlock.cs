@@ -39,7 +39,7 @@ public class UnitBlock : MonoBehaviour
 
     public void ShowUnit(Unit _unit){
         unit = _unit;
-        UnitData _unitData = unit.GetUnitData();
+        UnitData _unitData = unit.GetUnitData(gameCont);
         fon.GetComponent<Image>().sprite = unit.sprite;
         color.GetComponent<Image>().color = unit.idPlayer == 0 ? new Color(1,0,0,0.15f) : new Color(0,0,1,0.15f);
         damage.SetActive(true);

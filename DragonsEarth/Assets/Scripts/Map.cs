@@ -15,6 +15,7 @@ public class Map : MonoBehaviour
     [SerializeField] BattleCont battleCont;
     [SerializeField] Message message;
     [SerializeField] QueueCont queueCont;
+    public GameCont gameCont;
     private int xMax = 5;
     public int idCageBlockUnit = -1;
 
@@ -22,7 +23,7 @@ public class Map : MonoBehaviour
         generationMap.GenerationUnitGuards();
 
         for(int i = 0; i < cageBlocks.Count; i++) {
-            cageBlocks[i].AddObject(generationMap.GetCageBlockData(i), this, i);
+            cageBlocks[i].AddObject(generationMap.GetCageBlockData(i), this, i, gameCont);
         }
 
         /*Unit _unit = libaryUnit.GetUnit(CodeUnit.demon);
@@ -66,11 +67,11 @@ public class Map : MonoBehaviour
 
             if(GetDelta(idCageBlockUnit, i) <= speed && GetDelta(idCageBlockUnit, i) != 0 && 
                 (cageBlocks[i].isUnit && cageBlocks[idCageBlockUnit].isUnit && cageBlocks[i].unit.idPlayer != cageBlocks[idCageBlockUnit].unit.idPlayer 
-                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit)  && (!cageBlocks[i].isUnit || battleDatas[0].isDeath || battleDatas[1].isDeath)) {
+                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit)  && (!cageBlocks[i].isUnit || battleDatas[0].isDeath || battleDatas[1].isDeath || GetDelta(idCageBlockUnit, i) == 1)) {
                 cageBlocks[i].ActiveCageBlock();
             }
             if((GetDelta(idCageBlockUnit, i) == 0) || ((cageBlocks[i].isUnit && cageBlocks[idCageBlockUnit].isUnit && cageBlocks[i].unit.idPlayer != cageBlocks[idCageBlockUnit].unit.idPlayer 
-                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit) && (cageBlocks[i].isUnit && !battleDatas[0].isDeath && !battleDatas[1].isDeath))) {
+                    || !cageBlocks[i].isUnit || !cageBlocks[idCageBlockUnit].isUnit) && (cageBlocks[i].isUnit && !battleDatas[0].isDeath && !battleDatas[1].isDeath && GetDelta(idCageBlockUnit, i) != 1))) {
                 cageBlocks[i].ActiveCageBlockUnitTurn();
             }
         }
@@ -89,6 +90,7 @@ public class Map : MonoBehaviour
     public void MoveBattle(int _idCageBlock){
         List<int> idCageBlocks = new List<int>(){idCageBlockUnit ,_idCageBlock};
         List<BattleData> battleDatas = battleCont.GetBattleDatas(idCageBlocks);
+        int _idPlayer = cageBlocks[idCageBlockUnit].unit.idPlayer;
         
         for(int i = 0; i < idCageBlocks.Count; i++) {
             if(battleDatas[i].isDeath)
@@ -118,6 +120,16 @@ public class Map : MonoBehaviour
         NotActiveMap();
         if (battleDatas[1].isDeath && !battleDatas[0].isDeath)
             cageBlocks[idCageBlocks[1]].ActiveCageBlockUnitTurn();
+        
+        if (!battleDatas[1].isDeath && !battleDatas[0].isDeath)
+            cageBlocks[idCageBlocks[0]].ActiveCageBlockUnitTurn();
+        if (battleDatas[1].isDeath && cageBlocks[_idCageBlock].isGuard) {
+            cageBlocks[_idCageBlock].isGuard = false;
+            GetGiftPlayer(_idPlayer, cageBlocks[_idCageBlock].Object);
+            cageBlocks[_idCageBlock].Object = null;
+            cageBlocks[_idCageBlock].UpdateShow();
+        }
+        
     }
 
     public List<int> GetidCageBlockNear(int idCageBlock){
@@ -160,5 +172,13 @@ public class Map : MonoBehaviour
         for(int i = 0; i < cageBlocks.Count; i++) {
             cageBlocks[i].NotActiveCageBlock();
         }
+    }
+
+    private void GetGiftPlayer(int _idPlayer, Object _Object){
+        Player _player = gameCont.players[_idPlayer];
+        for(int i = 0; i < _Object.statGift.stats.Count; i++) {
+            _player.stat.stats[i] += _Object.statGift.stats[i];
+        }
+        queueCont.UpdateShow();
     }
 }

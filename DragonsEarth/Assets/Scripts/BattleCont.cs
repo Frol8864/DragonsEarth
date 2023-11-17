@@ -12,6 +12,7 @@ using Unity.Mathematics;
 public class BattleCont : MonoBehaviour
 {
     [SerializeField] Map map;
+    [SerializeField] GameCont gameCont;
     public List<BattleData> GetBattleDatas(List<int> idCageBlocks){
         List<BattleData> battleDatas = new List<BattleData>(){
             new BattleData(){
@@ -24,8 +25,8 @@ public class BattleCont : MonoBehaviour
             },
         };
         List<UnitData> unitDatas = new List<UnitData>(){
-            map.cageBlocks[idCageBlocks[0]].unit.GetUnitData(),
-            map.cageBlocks[idCageBlocks[1]].unit.GetUnitData(),
+            map.cageBlocks[idCageBlocks[0]].unit.GetUnitData(gameCont),
+            map.cageBlocks[idCageBlocks[1]].unit.GetUnitData(gameCont),
         };
         for(int i = 0; i < unitDatas.Count; i++) {
             if(!unitDatas[i].isMelee){
@@ -34,7 +35,7 @@ public class BattleCont : MonoBehaviour
         }
         List<int> idCageBlockNears = map.GetidCageBlockNear(idCageBlocks[1]);
         for(int i = 0; i < idCageBlockNears.Count; i++) {
-            UnitData _unitDataNear = map.cageBlocks[idCageBlockNears[i]].unit.GetUnitData();
+            UnitData _unitDataNear = map.cageBlocks[idCageBlockNears[i]].unit.GetUnitData(gameCont);
             foreach(UnitData _unitData in unitDatas) {
                 if(_unitDataNear.idPlayer == _unitData.idPlayer && !_unitDataNear.isMelee){
                     _unitData.statAll.stats[1] += _unitDataNear.strongNowAll;
